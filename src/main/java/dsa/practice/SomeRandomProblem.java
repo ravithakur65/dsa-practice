@@ -1,12 +1,11 @@
-package interview;
+package dsa.practice;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class Test {
+public class SomeRandomProblem {
     public static void main(String[] args) {
        /*
        Input: Start = [1, 0, 3, 5, 8, 5] End = [2, 6, 4, 7, 9, 9]	Output: 4

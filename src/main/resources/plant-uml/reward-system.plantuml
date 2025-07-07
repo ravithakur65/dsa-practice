@@ -1,0 +1,50 @@
+@startuml
+actor User
+actor TransactionSystem
+
+[User] --> [API Gateway]
+[TransactionSystem] --> [API Gateway]
+
+[API Gateway] --> [Reward Service]
+[API Gateway] --> [Leaderboard Service]
+[API Gateway] --> [User Reward Service]
+[API Gateway] --> [Auth Service]
+
+[Reward Service] --> [Sharded PostgreSQL]
+[Reward Service] --> [Kafka]
+[Reward Service] --> [Redis]
+
+[Leaderboard Service] --> [Redis]
+[Leaderboard Service] --> [Sharded PostgreSQL]
+[Leaderboard Service] --> [Kafka]
+
+[User Reward Service] --> [Redis]
+[User Reward Service] --> [Sharded PostgreSQL]
+
+[Kafka] --> [Leaderboard Service]
+
+[Sharded PostgreSQL] --> [Prometheus/Grafana]
+[Redis] --> [Prometheus/Grafana]
+[Kafka] --> [Prometheus/Grafana]
+
+note right of [API Gateway]
+  Spring Cloud Gateway
+  JWT Validation, Rate Limiting
+end note
+
+note right of [Reward Service]
+  Awards 10 points per £100
+  Strategy Pattern
+end note
+
+note right of [Leaderboard Service]
+  Caches top 10 in Redis
+  Observer Pattern (Kafka)
+end note
+
+note right of [User Reward Service]
+  User points, hierarchy
+  Flyweight for user metadata
+end note
+
+@enduml
